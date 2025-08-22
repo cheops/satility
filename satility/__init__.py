@@ -10,6 +10,6 @@ __all__ = [
 
 import importlib.metadata
 
-__version__ = importlib.metadata.version("salitity")
+__version__ = importlib.metadata.version("satility")
 
 
