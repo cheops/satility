@@ -12,11 +12,12 @@ def write_strip_image(
     valid_mask: np.ndarray,
     transform: Affine,
     crs: str | dict,
+    nodata: float = 0.0,
 ) -> None:
     """Save *pixel_data* (C, H, W) as a single‑strip COG."""
     bands, rows, cols = pixel_data.shape
     pixel_data = pixel_data.astype("float32", copy=False)
-    pixel_data[:, ~valid_mask] = 0.0  # apply mask in‑place
+    pixel_data[:, ~valid_mask] = nodata  # apply mask in‑place
 
     meta = dict(
         driver="GTiff",
@@ -28,7 +29,7 @@ def write_strip_image(
         compress="ZSTD",
         predictor=3,
         bigtiff="IF_SAFER",
-        nodata=0.0,
+        nodata=nodata,
         height=rows,
         width=cols,
         count=bands,
